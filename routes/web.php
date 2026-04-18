@@ -1,9 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return [
-        'message' => 'Hello, World!'
-    ];
-});
+Route::get('/',     [UserController::class, 'index']);
