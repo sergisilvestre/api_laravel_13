@@ -9,9 +9,6 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-ENV DB_HOST=db
-
-# Composer (cache optimizado)
 COPY composer.json composer.lock ./
 
 RUN composer install \
