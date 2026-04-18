@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\User\UseCases\AllUser;
+use App\Helpers\ApiResponse;
+
 class UserController extends Controller
 {
-    public function index()
+    public function index(AllUser $useCase)
     {
-        return response()->json([
-            'message' => 'Hello, World!',
-            'users' => \App\Models\User::all()
-        ]);
+        return ApiResponse::success($useCase->execute());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\User\Entities;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
@@ -29,4 +29,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected $hidden = [
+        'email_verified_at',
+        'updated_at',
+        'created_at'
+    ];
 }
