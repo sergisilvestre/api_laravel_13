@@ -1,31 +1,32 @@
 <?php
 
 return [
+
     'default' => 'v1',
 
     'documentations' => [
 
         'v1' => [
+
             'api' => [
                 'title' => 'API Laravel V1',
             ],
-            'routes' => [
-                'api' => 'api/v1/documentation',
-            ],
-            'paths' => [
-                'annotations' => base_path('app/swagger/V1'),
-            ],
-        ],
 
-        'v2' => [
-            'api' => [
-                'title' => 'API Laravel V2',
-            ],
             'routes' => [
-                'api' => 'api/v2/documentation',
+                'api' => 'api/documentation',
+                'docs' => 'docs',
             ],
+
             'paths' => [
-                'annotations' => base_path('app/swagger/V2'),
+                'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
+
+                'swagger_ui_assets_path' => env('L5_SWAGGER_UI_ASSETS_PATH', 'vendor/swagger-api/swagger-ui/dist/'),
+
+                'docs_json' => 'api-docs.json',
+
+                'annotations' => [
+                    base_path('app/OpenApi/V1/Controllers'),
+                ],
             ],
         ],
     ],

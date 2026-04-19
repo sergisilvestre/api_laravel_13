@@ -7,17 +7,17 @@
     "paths": {
         "/users": {
             "get": {
-                "summary": "Listar usuarios",
-                "operationId": "1ac7a967d2134b8502ddb9f7a2addc4e",
+                "summary": "List users",
+                "operationId": "2087342e72a75d6f2c840690e1e0483f",
                 "responses": {
                     "200": {
-                        "description": "Lista de usuarios"
+                        "description": "List of users"
                     }
                 }
             },
             "post": {
-                "summary": "Crear usuario",
-                "operationId": "726f8e83a310fb2ff5b279441b206e77",
+                "summary": "Create user",
+                "operationId": "9f6eb022e57bcff7cf2a161e137c3166",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -25,7 +25,8 @@
                             "schema": {
                                 "required": [
                                     "name",
-                                    "email"
+                                    "email",
+                                    "password"
                                 ],
                                 "properties": {
                                     "name": {
@@ -34,6 +35,10 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
                                     }
                                 },
                                 "type": "object"
@@ -43,7 +48,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuario creado"
+                        "description": "User created successfully"
                     }
                 }
             }

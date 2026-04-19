@@ -1,6 +1,6 @@
 <?php
 
-namespace App\V1\Controllers\User;
+namespace App\OpenApi\V1\Controllers\User;
 
 use App\Application\User\UseCases\AllUser;
 use App\Application\User\UseCases\StoreUser;
@@ -34,10 +34,11 @@ class UserController extends Controller
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ["name", "email"],
+                required: ["name", "email", "password"],
                 properties: [
                     new OA\Property(property: "name", type: "string"),
-                    new OA\Property(property: "email", type: "string", format: "email")
+                    new OA\Property(property: "email", type: "string", format: "email"),
+                    new OA\Property(property: "password", type: "string", format: "password")
                 ]
             )
         ),
