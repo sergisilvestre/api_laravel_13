@@ -14,15 +14,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-size: clamp(1.5rem, 10vw, 6rem);  
-            color: white; 
-            margin: 0; 
+            font-size: clamp(1.5rem, 10vw, 6rem);
+            color: white;
+            margin: 0;
         }
     </style>
 </head>
 
-<body>
-    {{ config('app.name') }}
-</body>
+<body>{{ config('app.name') }}</body>
 
 </html>
