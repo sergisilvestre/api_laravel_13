@@ -13,7 +13,7 @@ return [
             ],
 
             'routes' => [
-                'api' => 'api/documentation',
+                'api' => 'api/v1/documentation',
                 'docs' => 'docs',
             ],
 
@@ -25,7 +25,7 @@ return [
                 'docs_json' => 'api-docs.json',
 
                 'annotations' => [
-                    base_path('app/OpenApi/V1/Controllers'),
+                    base_path('app/Api/V1'),
                 ],
             ],
         ],

@@ -1,14 +1,14 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Laravel",
+        "title": "API",
         "version": "1.0.0"
     },
     "paths": {
         "/users": {
             "get": {
                 "summary": "List users",
-                "operationId": "2087342e72a75d6f2c840690e1e0483f",
+                "operationId": "8868cc34be0a8bff511baefe40d51801",
                 "responses": {
                     "200": {
                         "description": "List of users"
@@ -17,7 +17,7 @@
             },
             "post": {
                 "summary": "Create user",
-                "operationId": "9f6eb022e57bcff7cf2a161e137c3166",
+                "operationId": "face6e4f87d12db7c10c3191beea3b53",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -38,7 +38,9 @@
                                     },
                                     "password": {
                                         "type": "string",
-                                        "format": "password"
+                                        "format": "password",
+                                        "example": "secret123",
+                                        "minLength": 8
                                     }
                                 },
                                 "type": "object"

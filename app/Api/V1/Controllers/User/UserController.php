@@ -1,12 +1,12 @@
 <?php
 
-namespace App\OpenApi\V1\Controllers\User;
+namespace App\Api\V1\Controllers\User;
 
+use App\Api\V1\Requests\User\StoreUserRequest;
 use App\Application\User\UseCases\AllUser;
 use App\Application\User\UseCases\StoreUser;
 use App\Helpers\ApiResponse;
 use App\Http\Controller;
-use App\OpenApi\V1\Requests\User\StoreUserRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use OpenApi\Attributes as OA;
 
@@ -38,7 +38,13 @@ class UserController extends Controller
                 properties: [
                     new OA\Property(property: "name", type: "string"),
                     new OA\Property(property: "email", type: "string", format: "email"),
-                    new OA\Property(property: "password", type: "string", format: "password")
+                    new OA\Property(
+                        property: "password",
+                        type: "string",
+                        format: "password",
+                        minLength: 8,
+                        example: "secret123"
+                    ),
                 ]
             )
         ),

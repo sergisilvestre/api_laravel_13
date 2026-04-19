@@ -1,11 +1,11 @@
 <?php
 
-namespace App\OpenApi\V1;
+namespace App\Api\V1;
 
 use OpenApi\Attributes as OA;
 
 #[OA\Info(
-    title: "API Laravel",
+    title: "API",
     version: "1.0.0"
 )]
 class OpenApi {}
