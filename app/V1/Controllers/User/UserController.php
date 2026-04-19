@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\V1\Controllers\User;
 
 use App\Application\User\UseCases\AllUser;
 use App\Application\User\UseCases\StoreUser;
 use App\Helpers\ApiResponse;
-use App\Http\Controllers\Controller;
+use App\Http\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use OpenApi\Attributes as OA;

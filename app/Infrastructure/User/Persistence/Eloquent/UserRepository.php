@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     public Model $model;
-    
+
     public function __construct()
     {
         $this->model = new User();
@@ -19,7 +19,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function all(): Collection
     {
-
+        logger()->info('Fetching all users from the database');
+        
         return $this->model->orderBy('name')->get();
     }
 
