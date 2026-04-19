@@ -11,9 +11,7 @@ class AllUser
     ) {}
 
     public function execute()
-    {
-        logger()->info('Executing AllUser use case');
-        
+    {        
         return $this->repo->all();
     }
 }

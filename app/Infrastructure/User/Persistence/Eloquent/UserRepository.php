@@ -18,9 +18,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     public function all(): Collection
-    {
-        logger()->info('Fetching all users from the database');
-        
+    {        
         return $this->model->orderBy('name')->get();
     }
 
