@@ -6,6 +6,7 @@ use App\Domain\User\Entities\User;
 use App\Domain\User\Respositories\UserRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\Eloquent\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -16,8 +17,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->model = new User();
     }
 
-    public function all(){
+    public function all(): Collection
+    {
 
         return $this->model->orderBy('name')->get();
+    }
+
+    public function create(array $data): User
+    {
+        return $this->model->create($data);
     }
 }
