@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    {{ config('app.name') }} 1
+    {{ config('app.name') }}
 </body>
 
 </html>
