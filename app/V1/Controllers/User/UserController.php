@@ -6,7 +6,7 @@ use App\Application\User\UseCases\AllUser;
 use App\Application\User\UseCases\StoreUser;
 use App\Helpers\ApiResponse;
 use App\Http\Controller;
-use App\Http\Requests\User\StoreUserRequest;
+use App\V1\Requests\User\StoreUserRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use OpenApi\Attributes as OA;
 
@@ -15,11 +15,11 @@ class UserController extends Controller
 {
     #[OA\Get(
         path: "/users",
-        summary: "Listar usuarios",
+        summary: "List users",
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Lista de usuarios"
+                description: "List of users"
             )
         ]
     )]
@@ -30,7 +30,7 @@ class UserController extends Controller
 
     #[OA\Post(
         path: "/users",
-        summary: "Crear usuario",
+        summary: "Create user",
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
@@ -44,12 +44,13 @@ class UserController extends Controller
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Usuario creado"
+                description: "User created successfully"
             )
         ]
     )]
     public function store(StoreUserRequest $request, StoreUser $useCase): JsonResponse
     {
-        return ApiResponse::success($useCase->execute($request->validated()));
+        $user = $useCase->execute($request->validated());
+        return ApiResponse::success($user, 'User created successfully');
     }
 }
