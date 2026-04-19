@@ -6,7 +6,7 @@ use App\Application\User\UseCases\AllUser;
 use App\Application\User\UseCases\StoreUser;
 use App\Helpers\ApiResponse;
 use App\Http\Controller;
-use App\V1\Requests\User\StoreUserRequest;
+use App\OpenApi\V1\Requests\User\StoreUserRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use OpenApi\Attributes as OA;
 
