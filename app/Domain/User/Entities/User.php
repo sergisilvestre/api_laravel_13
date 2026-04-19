@@ -36,4 +36,9 @@ class User extends Authenticatable
         'updated_at',
         'created_at'
     ];
+
+    public static function factory()
+    {
+        return \Database\Factories\UserFactory::new();
+    }
 }
