@@ -1,5 +1,7 @@
 #!/bin/sh
 
+php artisan l5-swagger:generate
+
 echo "⏳ Waiting for MySQL..."
 
 while ! nc -z db 3306; do

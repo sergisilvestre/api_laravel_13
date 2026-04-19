@@ -23,7 +23,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->model->orderBy('name')->get();
     }
 
-    public function create(array $data): User
+    public function store(array $data): Model
     {
         return $this->model->create($data);
     }
