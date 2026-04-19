@@ -26,7 +26,7 @@ COPY . .
 # Laravel cache (only when everything exists)
 RUN php artisan package:discover \
  && php artisan config:cache \
- && php artisan route:cache
+ && php artisan route:cache \
  && php artisan optimize
 
 # Permissions
