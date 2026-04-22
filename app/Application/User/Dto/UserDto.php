@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\User\DTO;
+namespace App\Application\User\Dto;
 
-class StoreUser
+class UserDto
 {
     public function __construct(
         public int $id,

@@ -13,6 +13,7 @@
         "darkaonline/l5-swagger": "^11.0",
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0",
+        "tymon/jwt-auth": "^2.3",
         "zircote/swagger-php": "^6.1"
     },
     "require-dev": {

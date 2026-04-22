@@ -2,6 +2,7 @@
 
 namespace App\Application\User\UseCases;
 
+use App\Application\User\Dto\UserDto;
 use App\Domain\User\Respositories\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,10 +17,16 @@ class StoreUser
 
     /**
      * @param array $data
-     * @return Model
+     * @return UserDto
      */
-    public function execute(array $data): Model
+    public function execute(array $data): UserDto
     {
-        return $this->repo->store($data);
+        $item = $this->repo->store($data);
+        
+        return new UserDto(
+            id:     $item->id,
+            name:   $item->name,
+            email:  $item->email
+        );
     }
 }
