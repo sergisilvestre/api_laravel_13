@@ -25,7 +25,8 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET'),
+    'secret'        => env('JWT_SECRET'),
+    'expires_in'    => env('JWT_TTL', 60),
 
     /*
     |--------------------------------------------------------------------------

@@ -16,8 +16,8 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
+            'email'     => 'required|email',
+            'password'  => 'required'
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -36,9 +36,9 @@ class AuthController extends Controller
     protected function respondWithToken($token): array
     {
         return [
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60
+            'access_token'  => $token,
+            'token_type'    => 'bearer',
+            'expires_in'    => JWTAuth::factory()->getTTL() * config('jwt.ttl')
         ];
     }
 
