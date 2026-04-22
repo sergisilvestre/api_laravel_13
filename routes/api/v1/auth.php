@@ -4,16 +4,12 @@ use App\Api\V1\Controllers\Auth\AuthController;
 use App\Http\Middleware\GuestTokenAuth;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('auth')->group(function () {
-    
-    Route::prefix('token')->controller(AuthController::class)->group(function () {
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
 
-        Route::get('generate', 'generateToken');
+    Route::post('login', 'login');
 
-        Route::middleware(GuestTokenAuth::class)->group(function () {
-
-            Route::get('check', 'checkToken');
-            Route::get('revoke', 'revokeToken');
-        });
+    Route::middleware('auth:api')->group(function () {
+        Route::get('check', 'check');
+        Route::post('logout', 'logout');
     });
 });

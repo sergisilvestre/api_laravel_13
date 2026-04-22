@@ -2,56 +2,60 @@
 
 namespace App\Api\V1\Controllers\Auth;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-
-
-    public function generateToken()
+    /**
+     * Handle a login request to the application.
+     */
+    public function login(Request $request): JsonResponse
     {
-        $token = hash('sha256', Str::uuid());
-
-        $expiresAt = now()->addMinutes(30);
-
-        Cache::put(
-            "guest_token:$token",
-            [
-                'type' => 'guest',
-            ],
-            $expiresAt
-        );
-
-        return response()->json([
-            'token' => $token,
-            'expires_at' => $expiresAt->toISOString(),
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
-    }
 
+        $credentials = $request->only('email', 'password');
 
-    public function checkToken()
-    {
-        return response()->json([
-            'message' => 'Token is valid.'
-        ]);
-    }
+        if (!$token = JWTAuth::attempt($credentials)) {
 
-    public function revokeToken(Request $request)
-    {
-        $token = $request->bearerToken();
-
-        if (! $token) {
-            return response()->json(['message' => 'Token required'], 400);
+            return ApiResponse::error('Unauthorized', 401);
         }
 
-        Cache::forget("guest_token:$token");
+        return ApiResponse::success($this->respondWithToken($token));
+    }
 
-        return response()->json([
-            'message' => 'Token revoked'
-        ]);
+    /**
+     * Check if the user is authenticated.
+     */
+    protected function respondWithToken($token): array
+    {
+        return [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
+        ];
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     */
+    public function logout(): JsonResponse
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+        return ApiResponse::success(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     */
+    public function refresh(): JsonResponse
+    {
+        return ApiResponse::success($this->respondWithToken(JWTAuth::refresh()));
     }
 }
