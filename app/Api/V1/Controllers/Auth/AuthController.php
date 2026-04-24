@@ -8,12 +8,14 @@ use Illuminate\Http\JsonResponse;
 use App\Api\V1\Requests\Auth\LoginRequest;
 use App\Api\V1\Requests\Auth\RegisterVerifyRequest;
 use App\Application\User\UseCases\LoginUser;
+use App\Application\User\UseCases\VerifyUserToken;
 use App\Domain\Auth\TokenGenerator;
 
 class AuthController extends Controller
 {
     public function __construct(
         private LoginUser $loginUser,
+        private VerifyUserToken $verifyUserToken,
         private TokenGenerator $auth
     ) {}
     /**
@@ -67,7 +69,8 @@ class AuthController extends Controller
 
     public function verify(RegisterVerifyRequest $request): JsonResponse
     {
-        $this->auth->verifyEmail($request->input('token'));
+        $this->verifyUserToken->execute($request->input('token'));
+        
         return ApiResponse::success(['message' => 'Email verified successfully']);
     }
 }

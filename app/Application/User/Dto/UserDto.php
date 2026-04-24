@@ -8,5 +8,6 @@ class UserDto
         public int $id,
         public string $name,
         public string $email,
+        public ?string $verification_token = null
     ) {}
 }
