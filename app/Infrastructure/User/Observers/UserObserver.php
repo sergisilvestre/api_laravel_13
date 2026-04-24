@@ -18,7 +18,7 @@ class UserObserver
     {
         LogHelper::write('users', 'New user created: ' . $user->email);
         
-        event(new UserCreated($user->email, $user->name));
+        event(new UserCreated($user));
     }
 
     // public function updating(User $user): void

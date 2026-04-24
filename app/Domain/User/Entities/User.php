@@ -11,6 +11,22 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'verification_token'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'email_verified_at',
+        'verification_token',
+        'updated_at',
+        'created_at'
+    ];
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      */
@@ -40,20 +56,11 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password'
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'email_verified_at',
-        'updated_at',
-        'created_at'
-    ];
-
+    /**
+     * Factory method for the User model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
     public static function factory()
     {
         return \Database\Factories\UserFactory::new();

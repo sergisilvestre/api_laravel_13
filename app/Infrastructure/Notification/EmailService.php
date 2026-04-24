@@ -8,10 +8,10 @@ use App\Mail\WelcomeEmail;
 
 class EmailService
 {
-    public function sendWelcome(string $email, string $name): void
+    public function sendWelcome(string $email, string $name, string $verificationToken): void
     {
-        Mail::to($email)->send(new WelcomeEmail($name));
+        Mail::to($email)->send(new WelcomeEmail($name, $verificationToken));
 
-        LogHelper::write('users', ' Welcome email sent to: ' . $email);
+        LogHelper::write('users', 'Welcome email sent to: ' . $email);
     }
 }

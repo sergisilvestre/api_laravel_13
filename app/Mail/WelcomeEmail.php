@@ -15,13 +15,15 @@ class WelcomeEmail extends Mailable
     use Queueable, SerializesModels;
 
     public string $name;
+    public string $verificationToken;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(string $name)
+    public function __construct(string $name, string $verificationToken)
     {
         $this->name = $name;
+        $this->verificationToken = $verificationToken;
     }
 
     /**
@@ -43,7 +45,7 @@ class WelcomeEmail extends Mailable
             markdown: 'welcome_email',
             with: [
                 'name'  => $this->name,
-                'url'   => config('app.url'),
+                'url'   => config('app.url') . '/verify?token=' . $this->verificationToken,
             ],
         );
     }

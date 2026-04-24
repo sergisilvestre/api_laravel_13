@@ -6,7 +6,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Api\V1\Requests\Auth\LoginRequest;
-
+use App\Api\V1\Requests\Auth\RegisterVerifyRequest;
 use App\Application\User\UseCases\LoginUser;
 use App\Domain\Auth\TokenGenerator;
 
@@ -63,5 +63,11 @@ class AuthController extends Controller
     public function refresh(): JsonResponse
     {
         return ApiResponse::success($this->respondWithToken($this->auth->refresh()));
+    }
+
+    public function verify(RegisterVerifyRequest $request): JsonResponse
+    {
+        $this->auth->verifyEmail($request->input('token'));
+        return ApiResponse::success(['message' => 'Email verified successfully']);
     }
 }

@@ -12,10 +12,10 @@ class UserOnboardingService
     ) {}
 
 
-    public function onboard(string $email, string $name): void
+    public function onboard(string $email, string $name, string $verificationToken): void
     {
         LogHelper::write('users', 'Onboarding user: ' . $email);
         
-        $this->email->sendWelcome($email, $name);
+        $this->email->sendWelcome($email, $name, $verificationToken);
     }
 }
