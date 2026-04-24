@@ -14,7 +14,7 @@ class RegisterVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token' => ['required', 'string', 'exists:email_verifications,token'],
+            'token' => ['required', 'string', 'exists:users,verification_token'],
         ];
     }
 }

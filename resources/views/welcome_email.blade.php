@@ -5,7 +5,7 @@ Thank you for joining us!
 
 We're excited to have you on board.
 
-@component('mail::button', ['url' => config('app.url')])
+@component('mail::button', ['url' => $url])
 Verify Your Account
 @endcomponent
 

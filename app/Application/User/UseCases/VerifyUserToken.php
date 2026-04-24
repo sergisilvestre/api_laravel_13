@@ -33,14 +33,14 @@ class VerifyUserToken
     public function execute(string $token): bool
     {
         LogHelper::write('users', 'Verifying user token: ' . $token);
-        
+
         $user = $this->userRepository->findByToken($token);
 
         if (!$user) {
             throw new ModelNotFoundException('Invalid or expired verification token.');
         }
 
-        $this->updateUser->execute($user->id, ['email_verified_at' => Carbon::now()]);
+        $this->updateUser->execute(['id' => $user->id, 'email_verified_at' => Carbon::now()]);
 
         return true;
     }

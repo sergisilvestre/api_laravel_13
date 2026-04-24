@@ -54,6 +54,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function findByToken(string $token): ?User
     {
+        $alreadyVerified = $this->model->where('verification_token', $token)->whereNotNull('email_verified_at')->exists();
+        
+        if ($alreadyVerified) {
+            return null; // El token ya ha sido verificado
+        }
+
         return $this->model->where('verification_token', $token)->first();
     }
 }
