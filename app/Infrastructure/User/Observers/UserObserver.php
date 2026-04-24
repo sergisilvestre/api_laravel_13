@@ -14,7 +14,7 @@ class UserObserver
 
     public function created(User $user): void
     {
-        event(new UserCreated($user->email));
+        event(new UserCreated($user->email, $user->name));
     }
 
     public function updating(User $user): void

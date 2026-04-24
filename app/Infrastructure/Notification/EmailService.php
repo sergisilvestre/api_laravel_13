@@ -3,14 +3,12 @@
 namespace App\Infrastructure\Notification;
 
 use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeEmail;
 
 class EmailService
 {
-    public function sendWelcome(string $email): void
+    public function sendWelcome(string $email, string $name): void
     {
-        Mail::raw('Welcome!', function ($message) use ($email) {
-            $message->to($email)
-                ->subject('Welcome');
-        });
+        Mail::to($email)->send(new WelcomeEmail($name));
     }
 }

@@ -15,6 +15,6 @@ class SendWelcome implements ShouldQueue
 
     public function handle(UserCreated $event): void
     {
-        $this->service->onboard($event->email);
+        $this->service->onboard($event->email, $event->name);
     }
 }

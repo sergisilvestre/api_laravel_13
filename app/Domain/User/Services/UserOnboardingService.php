@@ -11,8 +11,8 @@ class UserOnboardingService
     ) {}
 
 
-    public function onboard(string $email): void
+    public function onboard(string $email, string $name): void
     {
-        $this->email->sendWelcome($email);
+        $this->email->sendWelcome($email, $name);
     }
 }
