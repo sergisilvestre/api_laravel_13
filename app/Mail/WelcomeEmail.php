@@ -45,7 +45,7 @@ class WelcomeEmail extends Mailable
             markdown: 'welcome_email',
             with: [
                 'name'  => $this->name,
-                'url'   => config('app.url') . '/verify?token=' . $this->verificationToken,
+                'url'   => route('api.v1.auth.verify', ['token' => $this->verificationToken]),
             ],
         );
     }

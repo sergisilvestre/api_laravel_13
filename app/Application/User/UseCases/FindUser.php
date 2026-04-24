@@ -5,6 +5,7 @@ namespace App\Application\User\UseCases;
 use App\Application\User\Dto\UserDto;
 use App\Domain\User\Respositories\UserRepositoryInterface;
 use App\Application\User\UseCases\GenerateUniqueVerificationToken;
+use App\Infrastructure\Helpers\LogHelper;
 
 class FindUser
 {
@@ -21,6 +22,8 @@ class FindUser
      */
     public function execute(int $id): UserDto
     {
+        LogHelper::write('users', 'Finding user with ID: ' . $id);
+        
         $item = $this->repo->find($id);
         
         return new UserDto(

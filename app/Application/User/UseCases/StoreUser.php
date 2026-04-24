@@ -25,6 +25,8 @@ class StoreUser
      */
     public function execute(array $data): UserDto
     {
+        LogHelper::write('users', 'Storing new user with email: ' . $data['email']);
+        
         // Generar un token único usando el nuevo use case
         $data['verification_token'] = $this->tokenGenerator->execute();
 

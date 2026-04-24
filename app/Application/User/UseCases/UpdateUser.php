@@ -5,6 +5,7 @@ namespace App\Application\User\UseCases;
 use App\Application\User\Dto\UserDto;
 use App\Domain\User\Respositories\UserRepositoryInterface;
 use App\Application\User\UseCases\GenerateUniqueVerificationToken;
+use App\Infrastructure\Helpers\LogHelper;
 
 class UpdateUser
 {
@@ -21,6 +22,8 @@ class UpdateUser
      */
     public function execute(array $data): UserDto
     {
+        LogHelper::write('users', 'Updating user with ID: ' . $data['id']);
+        
         $item = $this->repo->update($data['id'], $data);
         
         return new UserDto(

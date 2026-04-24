@@ -3,6 +3,7 @@
 namespace App\Application\User\UseCases;
 
 use App\Helpers\StringHelper;
+use App\Infrastructure\Helpers\LogHelper;
 use App\Infrastructure\User\Persistence\Eloquent\UserRepository;
 
 class GenerateUniqueVerificationToken
@@ -11,6 +12,8 @@ class GenerateUniqueVerificationToken
 
     public function execute(int $length = 255): string
     {
+        LogHelper::write('users', 'Generating unique verification token');
+        
         do {
             $token = StringHelper::random($length);
             $exists = $this->userRepository->tokenExists($token);

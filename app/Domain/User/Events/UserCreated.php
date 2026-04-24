@@ -7,7 +7,8 @@ use App\Domain\User\Entities\User;
 class UserCreated
 {
     public function __construct(
-        public readonly User $user,
-    ) {
-    }
+        public string $email,
+        public string $name,
+        public string $verification_token
+    ) {}
 }

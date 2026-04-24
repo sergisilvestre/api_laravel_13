@@ -11,13 +11,12 @@ class SendWelcome implements ShouldQueue
 {
     public function __construct(
         private UserOnboardingService $service
-    ) {
-    }
+    ) {}
 
     public function handle(UserCreated $event): void
     {
-        LogHelper::write('users', 'Handling UserCreated event for: ' . $event->user->email);
+        LogHelper::write('users', 'Handling UserCreated event for: ' . $event->email);
 
-        $this->service->onboard($event->user->email, $event->user->name, $event->user->verification_token);
+        $this->service->onboard($event->email, $event->name, $event->verification_token);
     }
 }
