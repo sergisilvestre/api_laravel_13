@@ -1,22 +1,6 @@
-version: "3.9"
 name: app
-services:
-  api:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    container_name: api
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
-    networks:
-      - app
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    volumes:
-      - .:/var/www
-      - /var/www/vendor
 
+services:
   db:
     image: mysql:8.3
     container_name: db
@@ -32,19 +16,50 @@ services:
       - dbdata:/var/lib/mysql
     networks:
       - app
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/var/www
+      - vendor:/var/www/vendor
+    working_dir: /var/www
+    depends_on:
+      db:
+        condition: service_healthy
 
   queue:
     build: .
     container_name: queue
     command: php artisan queue:work --tries=3 --timeout=90
+    restart: unless-stopped
     networks:
       - app
     volumes:
       - .:/var/www
+      - vendor:/var/www/vendor
+    working_dir: /var/www
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
 networks:
   app:
 
 volumes:
   dbdata:
+  vendor:
