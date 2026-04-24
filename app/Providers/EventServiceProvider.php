@@ -26,6 +26,14 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        $this->userEvents();
+    }
+
+    /**
+     * Register user-related events and listeners.
+     */
+    private function userEvents(): void
+    {
         Event::listen(UserCreated::class, SendWelcome::class);
     }
 }

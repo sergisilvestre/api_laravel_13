@@ -30,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
     }
 
+    /**
+     * Get the service bindings for the application.
+     *
+     * @return array
+     */
     private function bindings()
     {
         return [
