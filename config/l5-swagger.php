@@ -13,7 +13,7 @@ return [
             ],
 
             'routes' => [
-                'api' => 'api/v1/documentation',
+                'api' => 'api\v1\documentation',
                 'docs' => 'docs',
             ],
 

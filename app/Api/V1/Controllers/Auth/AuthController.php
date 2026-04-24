@@ -5,29 +5,35 @@ namespace App\Api\V1\Controllers\Auth;
 use App\Helpers\ApiResponse;
 use App\Http\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Api\V1\Requests\Auth\LoginRequest;
+
+use App\Application\User\UseCases\LoginUser;
+use App\Domain\Auth\TokenGenerator;
 
 class AuthController extends Controller
 {
+    public function __construct(
+        private LoginUser $loginUser,
+        private TokenGenerator $auth
+    ) {}
     /**
      * Handle a login request to the application.
      */
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email'     => 'required|email',
-            'password'  => 'required'
-        ]);
-
         $credentials = $request->only('email', 'password');
 
-        if (!$token = JWTAuth::attempt($credentials)) {
+        $token = $this->loginUser->execute($credentials);
 
+        if (!$token) {
             return ApiResponse::error('Unauthorized', 401);
         }
-
         return ApiResponse::success($this->respondWithToken($token));
+    }
+
+    public function check(): JsonResponse
+    {
+        return ApiResponse::success(['message' => 'Authenticated']);
     }
 
     /**
@@ -38,7 +44,7 @@ class AuthController extends Controller
         return [
             'access_token'  => $token,
             'token_type'    => 'bearer',
-            'expires_in'    => JWTAuth::factory()->getTTL() * config('jwt.ttl')
+            'expires_in'    => $this->auth->getTTL() * config('jwt.ttl')
         ];
     }
 
@@ -47,7 +53,7 @@ class AuthController extends Controller
      */
     public function logout(): JsonResponse
     {
-        JWTAuth::invalidate(JWTAuth::getToken());
+        $this->auth->invalidate();
         return ApiResponse::success(['message' => 'Successfully logged out']);
     }
 
@@ -56,6 +62,6 @@ class AuthController extends Controller
      */
     public function refresh(): JsonResponse
     {
-        return ApiResponse::success($this->respondWithToken(JWTAuth::refresh()));
+        return ApiResponse::success($this->respondWithToken($this->auth->refresh()));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\JsonResponse;
+use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,14 +15,21 @@ return Application::configure(basePath: dirname(__DIR__))
     )
 
     ->withMiddleware(function (Middleware $middleware): void {
-        // Apply only to API routes
+
+        // Middleware global API
         $middleware->api(append: [
             JsonResponse::class,
+        ]);
+
+        // Alias de middleware (aquí va JWT)
+        $middleware->alias([
+            'json.response' => JsonResponse::class,
+            'jwt'           => JwtMiddleware::class,
         ]);
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {
-
+        //
     })
 
     ->create();

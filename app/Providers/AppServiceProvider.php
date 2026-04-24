@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Domain\Auth\TokenGenerator;
 use App\Domain\User\Entities\User;
 use App\Domain\User\Respositories\UserRepositoryInterface;
+use App\Infrastructure\Auth\JwtService;
 use App\Infrastructure\User\Observers\UserObserver;
 use App\Infrastructure\User\Persistence\Eloquent\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -31,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
     private function bindings()
     {
         return [
-            UserRepositoryInterface::class => UserRepository::class,
+            UserRepositoryInterface::class      => UserRepository::class,
+            TokenGenerator::class               => JwtService::class,
         ];
     }
 }
