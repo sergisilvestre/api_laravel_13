@@ -42,7 +42,8 @@ class WelcomeEmail extends Mailable
         return new Content(
             markdown: 'welcome_email',
             with: [
-                'name' => $this->name,
+                'name'  => $this->name,
+                'url'   => config('app.url'),
             ],
         );
     }

@@ -2,6 +2,7 @@
 
 namespace App\Domain\User\Services;
 
+use App\Infrastructure\Helpers\LogHelper;
 use App\Infrastructure\Notification\EmailService;
 
 class UserOnboardingService
@@ -13,6 +14,8 @@ class UserOnboardingService
 
     public function onboard(string $email, string $name): void
     {
+        LogHelper::write('users', 'Onboarding user: ' . $email);
+        
         $this->email->sendWelcome($email, $name);
     }
 }
