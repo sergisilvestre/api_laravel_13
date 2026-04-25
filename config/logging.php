@@ -95,6 +95,12 @@ return [
             'level' => 'info',
         ],
 
+          'scheduler' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/scheduler/scheduler.log'),
+            'level' => 'info',
+        ],
+
     ],
 
 ];

@@ -56,6 +56,20 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  scheduler:
+    build: .
+    container_name: scheduler
+    command: php artisan schedule:work
+    restart: unless-stopped
+    networks:
+      - app
+    volumes:
+      - .:/var/www
+      - vendor:/var/www/vendor
+    working_dir: /var/www
+    depends_on:
+      db:
+        condition: service_healthy
 
 networks:
   app:

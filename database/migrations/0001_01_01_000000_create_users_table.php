@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('verification_token')->nullable();
+            $table->integer('verification_token_remembered_times')->nullable();
             $table->timestamps();
         });
 
