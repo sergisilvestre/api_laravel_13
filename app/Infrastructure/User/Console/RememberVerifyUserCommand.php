@@ -13,13 +13,11 @@ class RememberVerifyUserCommand extends Command
 
     public function __construct()
     {
-        logger('hello');
         parent::__construct();
     }
 
-    public function __invoke(): void
+    public function handle(): void
     {
-        logger('hello');
-        LogHelper::write('scheduler', PHP_EOL . PHP_EOL . 'Running command: ' . $this->signature);
+        LogHelper::write('scheduler', 'Running command: ' . $this->signature. PHP_EOL);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Infrastructure\User\Console\RememberVerifyUserCommand;
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('user:remember-verify-token')->everyFiveSeconds();
+// Schedule::command(RememberVerifyUserCommand::class)->everyFiveSeconds();

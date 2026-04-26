@@ -2,15 +2,17 @@
 
 use App\Http\Middleware\JsonResponse;
 use App\Http\Middleware\JwtMiddleware;
+use App\Infrastructure\User\Console\RememberVerifyUserCommand;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        api: __DIR__ . '/../routes/api.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
 
@@ -21,7 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
             JsonResponse::class,
         ]);
 
-        // Alias de middleware (aquí va JWT)
         $middleware->alias([
             'json.response' => JsonResponse::class,
             'jwt'           => JwtMiddleware::class,
@@ -30,6 +31,19 @@ return Application::configure(basePath: dirname(__DIR__))
 
     ->withExceptions(function (Exceptions $exceptions): void {
         //
+    })
+
+    ->withCommands([
+        RememberVerifyUserCommand::class,
+    ])
+
+    ->withSchedule(function (Schedule $schedule) {
+
+        // logger('Scheduling command: user:remember-verify-token');
+
+        $schedule->command('user:remember-verify-token')->everyFiveSeconds();
+
+        // require __DIR__ . '/../routes/console.php';
     })
 
     ->create();

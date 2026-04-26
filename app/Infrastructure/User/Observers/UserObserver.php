@@ -13,7 +13,6 @@ class UserObserver
      */
     public function creating(User $user): void
     {
-        LogHelper::write('users', PHP_EOL);
         LogHelper::write('users', 'Creating user: ' . $user->name);
     }
 
@@ -22,8 +21,8 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        LogHelper::write('users', 'New user created: ' . $user->email);
-        
+        LogHelper::write('users', 'New user created: ' . $user->email . PHP_EOL);
+
         event(new UserCreated($user->email, $user->name, $user->verification_token));
     }
 
