@@ -36,14 +36,5 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([
         RememberVerifyUserCommand::class,
     ])
-
-    ->withSchedule(function (Schedule $schedule) {
-
-        // logger('Scheduling command: user:remember-verify-token');
-
-        $schedule->command('user:remember-verify-token')->everyFiveSeconds();
-
-        // require __DIR__ . '/../routes/console.php';
-    })
-
+    
     ->create();
