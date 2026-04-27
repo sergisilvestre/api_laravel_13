@@ -12,9 +12,7 @@ class FindUser
     /**
      * @param UserRepositoryInterface $repo
      */
-    public function __construct(
-        private UserRepositoryInterface $repo,
-    ) {}
+    public function __construct(private UserRepositoryInterface $repository) {}
 
     /**
      * @param int $id
@@ -23,13 +21,13 @@ class FindUser
     public function execute(int $id): UserDto
     {
         LogHelper::write('users', 'Finding user with ID: ' . $id);
-        
-        $item = $this->repo->find($id);
-        
+
+        $item = $this->repository->find($id);
+
         return new UserDto(
-            id:     $item->id,
-            name:   $item->name,
-            email:  $item->email
+            id: $item->id,
+            name: $item->name,
+            email: $item->email
         );
     }
 }

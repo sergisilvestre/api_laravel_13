@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\User\UseCases;
+namespace App\Application\UserVerification\UseCases;
 
-use App\Application\User\Dto\UserDto;
+use App\Application\User\UseCases\UpdateUser;
 use App\Domain\User\Entities\User;
 use App\Infrastructure\Helpers\LogHelper;
-use App\Infrastructure\User\Persistence\Eloquent\UserRepository;
+use App\Infrastructure\UserVerification\Persistence\Eloquent\UserVerificationRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -19,7 +19,7 @@ class VerifyUserVerification
      * @throws ModelNotFoundException
      */
     public function __construct(
-        private UserVerificationRepository $userVerificationRepository,
+        private UserVerificationRepository $repository,
         private UpdateUser $updateUser
     ) {}
 
@@ -34,7 +34,7 @@ class VerifyUserVerification
     {
         LogHelper::write('users', 'Verifying user token: ' . $token);
 
-        $userVerification = $this->userVerificationRepository->findByToken($token);
+        $userVerification = $this->repository->findByToken($token);
 
         if (!$userVerification) {
             throw new ModelNotFoundException('Invalid or expired verification token.');
@@ -45,4 +45,3 @@ class VerifyUserVerification
         return true;
     }
 }
-X

@@ -10,11 +10,9 @@ use App\Infrastructure\Helpers\LogHelper;
 class UpdateUser
 {
     /**
-     * @param UserRepositoryInterface $repo
+     * @param UserRepositoryInterface $repository
      */
-    public function __construct(
-        private UserRepositoryInterface $repo
-    ) {}
+    public function __construct(private UserRepositoryInterface $repository) {}
 
     /**
      * @param array $data
@@ -23,13 +21,13 @@ class UpdateUser
     public function execute(array $data): UserDto
     {
         LogHelper::write('users', 'Updating user with ID: ' . $data['id']);
-        
-        $item = $this->repo->update($data['id'], $data);
-        
+
+        $item = $this->repository->update($data['id'], $data);
+
         return new UserDto(
-            id:     $item->id,
-            name:   $item->name,
-            email:  $item->email
+            id: $item->id,
+            name: $item->name,
+            email: $item->email
         );
     }
 }

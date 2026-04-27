@@ -2,21 +2,33 @@
 
 namespace App\Application\UserVerification\UseCases;
 
-use App\Helpers\StringHelper;
+use App\Application\UserVerification\Dto\UserVerificationDto;
 use App\Infrastructure\Helpers\LogHelper;
+use App\Infrastructure\UserVerification\Persistence\Eloquent\UserVerificationRepository;
 
 class StoreUserVerification
 {
-    public function __construct(private UserVerificationRepository $userVerificationRepository) {}
+    public function __construct(
+        private UserVerificationRepository $repository,
+        private GenerateUniqueVerificationToken $token,
+        ) {}
 
-    public function execute(int $length = 255): string
+    public function execute(array $data): UserVerificationDto
     {
-        LogHelper::write('users', 'Generating unique verification token');
+        LogHelper::write('users', 'Storing user verification for user ID: ' . $data['user_id']);
 
-        do {
-            $token = StringHelper::random($length);
-            $exists = $this->userVerificationRepository->tokenExists($token);
-        } while ($exists);
-        return $token;
+        $token = $this->token->execute();
+        
+        $item = $this->repository->store([
+            'user_id'           => $data['user_id'],
+            'token'             => $token,
+            'token_expires_at'  => config('user.verification.token_expiration_hours'),
+        ]);
+
+        return new UserVerificationDto(
+            user_id: $item->user_id,
+            token: $item->token,
+            token_expires_at: $item->token_expires_at,
+        );
     }
 }

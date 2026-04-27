@@ -5,7 +5,9 @@ namespace App\Application\User\UseCases;
 use App\Application\User\Dto\UserDto;
 use App\Domain\User\Respositories\UserRepositoryInterface;
 use App\Application\UserVerification\UseCases\GenerateUniqueVerificationToken;
+use App\Application\UserVerification\UseCases\StoreUserVerification;
 use App\Infrastructure\Helpers\LogHelper;
+use App\Infrastructure\UserVeritication\Persistence\Eloquent\UserVerificationRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
@@ -17,7 +19,7 @@ class StoreUser
      */
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private UserVerificationRepositoryInterface $userVerificationRepository,
+        private StoreUserVerification $storeUserVerification,
     ) {}
 
     /**
@@ -30,7 +32,7 @@ class StoreUser
 
         $item = $this->userRepository->store($data);
 
-        $this->userVerificationRepository->store(['user_id' => $item->id]);
+        $this->storeUserVerification->execute(['user_id' => $item->id]);
         
         return new UserDto(
             id:     $item->id,

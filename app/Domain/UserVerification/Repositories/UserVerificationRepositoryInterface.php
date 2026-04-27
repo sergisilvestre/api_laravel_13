@@ -2,7 +2,9 @@
 
 namespace App\Infrastructure\UserVeritication\Persistence\Eloquent;
 
-interface UserVerificationRepositoryInterface
+use App\Shared\Domain\Contracts\BaseRepositoryInterface;
+
+interface UserVerificationRepositoryInterface extends BaseRepositoryInterface
 {
     /**
      * Busca un registro de verificación de usuario por su token.

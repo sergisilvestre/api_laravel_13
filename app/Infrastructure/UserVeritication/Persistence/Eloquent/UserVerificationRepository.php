@@ -29,4 +29,18 @@ class UserVerificationRepository extends BaseRepository implements UserVerificat
     {
         return $this->model->where('token', $token)->first();
     }
+
+
+    /**
+     * Verifica si un token de verificación de usuario ya existe.
+     *
+     * @param string $token
+     * @return bool
+     */
+    public function tokenExists(string $token): bool
+    {
+        return $this->model
+            ->where('expires_at', '>', now())
+            ->where('token', $token)->exists();
+    }
 }

@@ -10,14 +10,14 @@ use Illuminate\Container\Attributes\Log;
 class AllUser
 {
     public function __construct(
-        private UserRepositoryInterface $repo
+        private UserRepositoryInterface $repository,
     ) {}
 
     public function execute()
     {
         LogHelper::write('users', 'Fetching all users');
 
-        return $this->repo->all()->map(fn($user) => new UserDto(
+        return $this->repository->all()->map(fn($user) => new UserDto(
             id: $user->id,
             name: $user->name,
             email: $user->email
