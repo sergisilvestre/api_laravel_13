@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\UserVeritication\Persistence\Eloquent;
+namespace App\Infrastructure\UserVeritication\Persistence\Eloquent\Observers;
 
 use App\Domain\UserVerification\Entities\UserVerification;
 use App\Infrastructure\Helpers\LogHelper;

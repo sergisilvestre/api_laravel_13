@@ -9,7 +9,7 @@ use App\Domain\UserVerification\Entities\UserVerification;
 use App\Infrastructure\Auth\JwtService;
 use App\Infrastructure\User\Observers\UserObserver;
 use App\Infrastructure\User\Persistence\Eloquent\UserRepository;
-use App\Infrastructure\UserVeritication\Persistence\Eloquent\UserVerificationObserver;
+use App\Infrastructure\UserVeritication\Persistence\Eloquent\Observers\UserVerificationObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
