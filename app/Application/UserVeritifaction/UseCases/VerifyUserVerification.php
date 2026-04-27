@@ -9,7 +9,7 @@ use App\Infrastructure\User\Persistence\Eloquent\UserRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class VerifyUserToken
+class VerifyUserVerification
 {
     /**
      * Verifica el token de verificación, marca el email como verificado y limpia el token.
@@ -19,7 +19,7 @@ class VerifyUserToken
      * @throws ModelNotFoundException
      */
     public function __construct(
-        private UserRepository $userRepository,
+        private UserVerificationRepository $userVerificationRepository,
         private UpdateUser $updateUser
     ) {}
 
@@ -34,13 +34,13 @@ class VerifyUserToken
     {
         LogHelper::write('users', 'Verifying user token: ' . $token);
 
-        $user = $this->userRepository->findByToken($token);
+        $userVerification = $this->userVerificationRepository->findByToken($token);
 
-        if (!$user) {
+        if (!$userVerification) {
             throw new ModelNotFoundException('Invalid or expired verification token.');
         }
 
-        $this->updateUser->execute(['id' => $user->id, 'email_verified_at' => Carbon::now()]);
+        $this->updateUser->execute(['id' => $userVerification->user_id, 'email_verified_at' => Carbon::now()]);
 
         return true;
     }

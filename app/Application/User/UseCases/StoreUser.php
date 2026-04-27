@@ -4,7 +4,7 @@ namespace App\Application\User\UseCases;
 
 use App\Application\User\Dto\UserDto;
 use App\Domain\User\Respositories\UserRepositoryInterface;
-use App\Application\User\UseCases\GenerateUniqueVerificationToken;
+use App\Application\UserVerification\UseCases\GenerateUniqueVerificationToken;
 use App\Infrastructure\Helpers\LogHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Log;
 class StoreUser
 {
     /**
-     * @param UserRepositoryInterface $repo
+     * @param UserRepositoryInterface $userRepository
+     * @param UserVerificationRepositoryInterface $userVerificationRepository
      */
     public function __construct(
-        private UserRepositoryInterface $repo,
-        private GenerateUniqueVerificationToken $tokenGenerator
+        private UserRepositoryInterface $userRepository,
+        private UserVerificationRepositoryInterface $userVerificationRepository,
     ) {}
 
     /**
@@ -26,11 +27,10 @@ class StoreUser
     public function execute(array $data): UserDto
     {
         LogHelper::write('users', 'Storing new user with email: ' . $data['email']);
-        
-        // Generar un token único usando el nuevo use case
-        $data['verification_token'] = $this->tokenGenerator->execute();
 
-        $item = $this->repo->store($data);
+        $item = $this->userRepository->store($data);
+
+        $this->userVerificationRepository->store(['user_id' => $item->id]);
         
         return new UserDto(
             id:     $item->id,

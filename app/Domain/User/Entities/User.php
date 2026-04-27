@@ -15,17 +15,11 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'verification_token',
-        'email_verified_at',
-        'verification_token_remembered_times',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-        'email_verified_at',
-        'verification_token',
-        'verification_token_remembered_times',
         'updated_at',
         'created_at'
     ];
@@ -54,8 +48,7 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
+            'password' => 'hashed',
         ];
     }
 

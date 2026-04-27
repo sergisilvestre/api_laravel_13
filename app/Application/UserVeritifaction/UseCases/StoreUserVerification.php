@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Application\User\UseCases;
+namespace App\Application\UserVerification\UseCases;
 
 use App\Helpers\StringHelper;
 use App\Infrastructure\Helpers\LogHelper;
-use App\Infrastructure\User\Persistence\Eloquent\UserRepository;
 
-class GenerateUniqueVerificationToken
+class StoreUserVerification
 {
-    public function __construct(private UserRepository $userRepository) {}
+    public function __construct(private UserVerificationRepository $userVerificationRepository) {}
 
     public function execute(int $length = 255): string
     {
         LogHelper::write('users', 'Generating unique verification token');
-        
+
         do {
             $token = StringHelper::random($length);
-            $exists = $this->userRepository->tokenExists($token);
+            $exists = $this->userVerificationRepository->tokenExists($token);
         } while ($exists);
         return $token;
     }
